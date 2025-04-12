@@ -19,9 +19,52 @@
 
 ### 1차시
 
+#### 터미널 공통 명령어
+- 현재 디렉토리의 파일/폴더 확인하기
 ```bash
-
+ls
 ```
+     
+- 다른 폴더로 이동하기
+```bash
+cd 폴더명
+```
+
+- 특정 폴더/파일 지우기
+```bash
+rm -rf 폴더/파일명
+```
+     
+#### 가상환경 관련 명령어
+
+- 가상 환경 생성
+
+```bash
+python -m venv env
+```
+       
+- 가상환경 활성화(윈도우 Git Bash)       
+```bash
+source env/Scripts/activate
+```
+
+- 가상환경 활성화(Mac, Linux)    
+
+```bash
+source env/bin/activate
+```
+       
+- 필요 라이브러리 설치
+```bash
+pip install -r requirements.txt
+```
+
+### 3차시
+
+- 스트림릿 작동(가상환경 활성화된 상태에서)
+```bash
+streamlit run 파일명
+```    
 
 ### 4-5차시
 
