@@ -58,22 +58,56 @@ source env/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-
+-------------
 ### 3차시
 
 - 스트림릿 작동(가상환경 활성화된 상태에서)
 ```bash
 streamlit run 파일명
 ```    
-
+-------------
 ### 4-5차시
 
-```bash
 
+#### 내가 만든 서비스 서버에 업로드하기
+
+- 현재 가상환경 세팅 저장
+```bash
+pip freeze > requirements.txt
 ```
 
+#### Git에 내 코드 업로드하기
+
+- 레포지토리에 깃 관련 코드 활성화
+```bash
+git init
+```
+       
+- 모든 파일 깃 업로드 준비하기
+```bash
+git add .
+```
+      
+- 현재 상황 온라인 저장하기(체크포인트 개념)
+```bash
+git commit -m "첫 커밋"
+```
+
+
+--------------
 ### 6차시
 
-```bash
+- AWS EC2 인스턴스 기본 세팅
 
+```bash
+sudo apt update
 ```
+
+```bash
+sudo apt install python3.12-venv
+```
+
+- 내 코드 가져오기
+
+```bash
+git clone 내 레포지토리 주소
