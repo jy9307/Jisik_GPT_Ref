@@ -82,6 +82,12 @@ pip freeze > requirements.txt
 ```bash
 git init
 ```
+
+- 내 정보 깃에 입력하기
+```bash
+git git config --global user.name "내이름(아무거나)"
+git config --global user.email "내이메일주소@이메일.com"
+```
        
 - 모든 파일 깃 업로드 준비하기
 ```bash
@@ -92,7 +98,15 @@ git add .
 ```bash
 git commit -m "첫 커밋"
 ```
-
+     
+- 이 이후에 'Publish Branch'를 통해 레포지토리를 개설합니다.
+       
+- 만약 이후에 추가로 어떤 내용을 수정하고 다시 해당 내용을 레포지토리에 반영하고 싶을 경우 아래와 같이 순서대로 터미널에 써주세요.
+```bash
+git add .
+git commit -m "커밋이름(자유)"
+git push
+```
 
 --------------
 ### 6차시
@@ -111,3 +125,35 @@ sudo apt install python3.12-venv
 
 ```bash
 git clone 내 레포지토리 주소
+```
+
+
+----------
+### 자동실행세팅
+
+```bash
+sudo nano /etc/systemd/system/streamlit.service
+```
+
+- 서비스 파일 세팅
+```bash
+[Unit]
+Description=Feedback Helper
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/폴더이름
+ExecStart=/home/ubuntu/폴더이름/env/bin/streamlit run app.py --server.port=8501 --server.headless=true
+Restart=always
+Environment="PATH=/home/ubuntu/폴더이름/env/bin"
+
+[Install]
+WantedBy=multi-user.target
+```
+      
+- 자동실행 세팅
+```bash
+sudo systemctl enable streamlit.service
+sudo systemctl start streamlit.service
+```
