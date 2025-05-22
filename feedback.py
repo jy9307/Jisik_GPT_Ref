@@ -91,7 +91,6 @@ def student_feedback():
         with container1:
             st.markdown("#### 최종 피드백")
             if final_feedback_button:
-                # final_chain은 외부에서 정의된 것으로 가정
                 final_feedback_result = final_chain.invoke({"name": name, "input": content})
                 st.markdown(final_feedback_result)
 
@@ -107,7 +106,6 @@ def student_feedback():
                     "인공지능 피드백": final_feedback_result
                 }
 
-                # 기존 데이터 로드 (파일이 없으면 빈 DataFrame 생성)
                 try:
                     df = pd.read_excel("student_answer.xlsx")
                 except FileNotFoundError:
@@ -153,7 +151,6 @@ def teacher_feedback():
         else:
             st.markdown("### 학생 제출 목록")
 
-            # 🔍 열 필터 기능
             with st.expander("🔍 열 필터"):
                 filter_columns = ["이름", "주제"]
                 for col in filter_columns:
@@ -161,7 +158,6 @@ def teacher_feedback():
                     selected_values = st.multiselect(f"{col} 필터", unique_values, default=unique_values)
                     df = df[df[col].isin(selected_values)]
 
-            # 📥 엑셀 파일 다운로드 버튼
             with open(excel_file, "rb") as f:
                 excel_data = f.read()
             st.download_button(
@@ -170,17 +166,17 @@ def teacher_feedback():
                 file_name="student_answer.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
+            confirm = st.checkbox("정말 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.")
 
-            # 🧹 파일 초기화 기능
-            if st.button("⚠️ 모든 제출 데이터 초기화"):
-                confirm = st.checkbox("정말 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.")
-                if confirm:
-                    empty_df = pd.DataFrame(columns=["날짜", "주제", "이름", "제출 답변", "인공지능이 준 피드백"])
-                    empty_df.to_excel(excel_file, index=False)
-                    st.success("제출 목록이 초기화되었습니다.")
-                    st.rerun()
+            if confirm and st.button("⚠️ 모든 제출 데이터 초기화"):
 
-            # 데이터프레임 표시
+                empty_df = pd.DataFrame(
+                    columns=["날짜", "주제", "이름", "제출 답변", "인공지능 피드백"]
+                )
+                empty_df.to_excel(excel_file, index=False)
+                st.success("제출 목록이 초기화되었습니다.")
+                st.rerun()
+
             st.dataframe(df, use_container_width=True)
     else:
         st.warning("student_answer.xlsx 파일이 없습니다. 학생이 제출한 데이터가 아직 없습니다.")
@@ -188,7 +184,7 @@ def teacher_feedback():
 # 메인 함수
 def feedback():
     # auth에 따라 UI 분기
-    auth = st.session_state.get('auth', 'student')  # 기본값은 student
+    auth = st.session_state.get('auth', 'student') 
     if auth == "student":
         student_feedback()
     elif auth == "teacher":
